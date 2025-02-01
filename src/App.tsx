@@ -7,7 +7,6 @@ import { Slider } from './components/ui/slider';
 
 import { Moon, Sun, Tally4, AudioLines } from 'lucide-react';
 import { Input } from './components/ui/input';
-import { BlockPicker } from 'react-color';
 const presets = [
   {
     mean: 128,
@@ -31,17 +30,20 @@ function App() {
   const [stdDev, setStdDev] = useState(50);
   const imageBase64 = useNoise(mean, stdDev);
   const [advanced, setAdvanced] = useState(false);
-  const [displayColorPicker, setDisplayColorPicker] = useState(false);
-
+  const [backgroundColor, setBackgroundColor] = useState('#18181b');
+  const [visible, setVisible] = useState(true);
+  console.log(imageBase64);
   
   return (
-    <div className="bg-zinc-900 min-h-screen flex flex-col items-center justify-start">
-    <div className="absolute h-screen w-screen bg-repeat opacity-5 rounded-none z-0 pointer-events-none" style={{backgroundImage: `url(${imageBase64})`}}></div>
+    <div className="min-h-screen flex flex-col items-center justify-start" style={{backgroundColor: backgroundColor}}>
+    <div className="absolute h-screen w-screen bg-repeat opacity-5 rounded-none z-0 pointer-events-none noise-md" 
+    // style={{backgroundImage: `url(${imageBase64})`}}
+    ></div>
 
-      <h1 className='text-5xl font-bold text-white mt-20 mb-2 poppins-bold'>Grain/Noise Generator</h1>
-      <p className='text-lg font-bold text-zinc-300 mb-20 poppins-medium'>Create Gaussian White Noise Textures</p>
+      <h1 className='text-5xl font-bold text-white mt-5 sm:mt-20 mb-2 poppins-bold text-center' style={{opacity: visible ? 100 : 0}}>Grain/Noise Generator</h1>
+      <p className='text-lg font-bold text-zinc-300 mb-5 md:mb-20 poppins-medium' style={{opacity: visible ? 100 : 0}}>Create Gaussian White Noise Textures</p>
 
-      <Card className="w-full max-w-3xl bg-zinc-900 border text-white z-0 flex flex-row p-4 justify-between rounded-none">
+      <Card className="md:w-full max-w-3xl bg-zinc-900 border text-white z-0 flex flex-col-reverse items-center md:flex-row p-4 justify-between rounded-none" style={{opacity: visible ? 100 : 0}}>
         <CardContent className="flex flex-col items-center">
           <Label className='w-full mb-2 font-md poppins-medium'>Presets</Label>
 
@@ -61,8 +63,21 @@ function App() {
             ))}
           </div>
           <Label className='w-full mb-2 font-md poppins-medium mt-4'>Background Color</Label>
-          <Input type='color' value='#000000' className='w-full' />
-
+          <div className="flex gap-2 w-full items-center">
+                  <Input
+                    id="color"
+                    type="color"
+                    value={backgroundColor}
+                    onChange={(e) => setBackgroundColor(e.target.value)}
+                    className="h-10 w-20 p-1 cursor-pointer"
+                  />
+                  <Input
+                    type="text"
+                    value={backgroundColor.toUpperCase()}
+                    onChange={(e) => setBackgroundColor(e.target.value)}
+                    className="flex-1 h-10 font-mono"
+                  />
+                </div>
 
           <Button
             variant="outline"
@@ -124,7 +139,15 @@ function App() {
             </div>
           )}
       </Card>
-    </div>
+
+      <Button
+            variant="outline"
+            size="lg"
+            className='rounded-none text-white mt-5 sm:absolute bottom-4'
+            onClick={() => setVisible(!visible)}
+          >
+            {visible ? 'Hide UI' : 'Show UI'}
+          </Button>    </div>
   );
 }
 
