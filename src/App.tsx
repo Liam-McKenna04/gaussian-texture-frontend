@@ -51,7 +51,7 @@ function App() {
   
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`bg-noise-${mean}-${stdDev}-${opacity}`);
+    navigator.clipboard.writeText(`bg-[${backgroundColor}] {noise-[${mean},${stdDev},${opacity}]`);
     setCopied(true);
     setTimeout(() => setCopied(false), 700);
   };
