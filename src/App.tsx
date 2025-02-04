@@ -5,7 +5,7 @@ import { useNoise } from './hooks/useNoise';
 import { Label } from './components/ui/label';
 import { Slider } from './components/ui/slider';
 
-import { Moon, Sun, Tally4, AudioLines, EyeClosed, EyeOff, Eye, Download, Copy } from 'lucide-react';
+import { Moon, Sun, Tally4, AudioLines, EyeOff, Eye, Download, Copy } from 'lucide-react';
 import { Input } from './components/ui/input';
 const presets = [
   {
