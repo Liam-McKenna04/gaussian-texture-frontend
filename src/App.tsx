@@ -57,10 +57,8 @@ function App() {
   };
 
   const handleDownload = () => {
-    // Create a temporary link element
     const link = document.createElement('a');
     
-    // Convert base64 to blob
     const byteString = atob(imageBase64.split(',')[1]);
     const mimeString = imageBase64.split(',')[0].split(':')[1].split(';')[0];
     const ab = new ArrayBuffer(byteString.length);
@@ -73,13 +71,11 @@ function App() {
     const blob = new Blob([ab], { type: mimeString });
     const url = URL.createObjectURL(blob);
     
-    // Set up download
     link.href = url;
     link.download = `noise-${mean}-${stdDev}.png`;
     document.body.appendChild(link);
     link.click();
     
-    // Clean up
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
@@ -236,7 +232,7 @@ function App() {
       <Button
             variant="outline"
             size="lg"
-            className='rounded-none text-white bottom-4 my-5 md:absolute md:mb-0 z-10'
+            className='rounded-none text-white bottom-4 right-4 my-5 lg:absolute lg:mb-0 z-10'
             onClick={() => setVisible(!visible)}
           >
             {visible ? 'Hide UI' : 'Show UI'}
